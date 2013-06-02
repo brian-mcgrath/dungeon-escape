@@ -20,7 +20,7 @@ public class Sound implements Runnable{
 			AudioInputStream inputStream = AudioSystem.getAudioInputStream(fileIn);
 			clip = AudioSystem.getClip();
 			clip.open(inputStream);
-//			System.out.println("Loaded: sounds\\" + url);
+			System.out.println("Loaded: sounds\\" + url);
 		}
 		catch (Exception e) {
 			System.err.println(e.getMessage());

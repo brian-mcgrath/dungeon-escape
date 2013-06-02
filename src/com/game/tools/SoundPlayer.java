@@ -21,9 +21,9 @@ public class SoundPlayer {
 	{
 		List<Sound> shots = new ArrayList<Sound>();
 		String url;
-		for (int i = 0; i < 2; i++)
+		for (int i = 0; i < 3; i++)
 		{
-			url = "weapon_" + (i + 1) + "_shot.wav";
+			url = "weapon_" + (i) + "_shot.wav";
 			shots.add(new Sound(url));
 		}
 		return shots;
@@ -49,8 +49,8 @@ public class SoundPlayer {
 	}
 	
 	public void playGunshot(int id) {
-		gunShots.get(id - 1).run();
-		gunShots.get(id - 1).playOnce();
+		gunShots.get(id).run();
+		gunShots.get(id).playOnce();
 	}
 	
 	public void playReload() {

@@ -32,9 +32,9 @@ public class Player {
 	public Player(double posX, double posY, Angle angle) {
 		this.playerVector = new Vector2d(posX, posY);
 		this.angle = angle;
-		this.weapon = new Weapon(1);
-		this.velocity = 4;
-		this.health = 100;
+		this.weapon = new Weapon(0);
+		this.velocity = 5;
+		this.health = 99;
 		setRaycaster(new Raycaster(this));
 	}
 
@@ -42,7 +42,12 @@ public class Player {
 	/**
 	 * @param rotationSpeed
 	 */
-	public void turn(double rotationSpeed) {
+	public void turn(boolean left) {
+		double rotationSpeed = velocity / 2;
+		if(left)
+		{
+			rotationSpeed = rotationSpeed * -1;
+		}
 		angle.incrementValueBy(Math.toRadians(rotationSpeed));
 	}
 
@@ -51,7 +56,12 @@ public class Player {
 	 * @param acceleration
 	 * @param maze
 	 */
-	public void move(double acceleration, Map maze) {
+	public void move(Map maze, boolean forward) {
+		double acceleration = velocity;
+		if(!forward)
+		{
+			acceleration = -1 * acceleration;
+		}
 		double dx = playerVector.x
 				+ (Math.cos(angle.getValue()) * acceleration);
 		double dy = playerVector.y

@@ -22,15 +22,32 @@ public class Weapon implements Runnable{
 		firing = false;
 		reloading = false;
 		images = loadImages(id);
-		numberOfClips = 3;
+		numberOfClips = getMaxClips(id);
 		ammoInCurrentClip = getFullClip(id);
 		animateWeapon = new Thread(this);
 		animateWeapon.start();
 	}
 	
+	public int getMaxClips(int id)
+	{
+		if (id == 1)
+		{
+			return 8;
+		}
+		else if (id == 2)
+		{
+			return 5;
+		}
+		return 0;
+	}
+	
 	public void fire()
 	{	
-		if(ammoInCurrentClip > 0)
+		if(id == 0)
+		{
+			firing = true;
+		}
+		else if(ammoInCurrentClip > 0)
 		{
 			firing = true;
 			ammoInCurrentClip = ammoInCurrentClip - 1;
@@ -39,7 +56,7 @@ public class Weapon implements Runnable{
 	
 	public void reload()
 	{		
-		if (numberOfClips > 0)
+		if ((numberOfClips > 0) && (id != 0))
 		{
 			reloading = true;
 			numberOfClips = numberOfClips - 1;
@@ -58,7 +75,6 @@ public class Weapon implements Runnable{
 			reloading = false;
 			sign = 1;
 		}
-//		invokeSleep(100);
 	}
 	
 	public void reloadAnimation() {
@@ -81,6 +97,9 @@ public class Weapon implements Runnable{
 	
 	private int getNumberOfFrames(int id)
 	{
+//		if (id == 0){
+//			return 3;
+//		}
 		if (id == 1)
 		{
 			return 5;
@@ -89,7 +108,7 @@ public class Weapon implements Runnable{
 		{
 			return 4;
 		}
-		return 0;
+		return 3;
 	}
 	
 	private int getFullClip(int id)

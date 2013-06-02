@@ -197,7 +197,7 @@ public class Game extends JFrame implements ActionListener {
 				System.exit(0);
 			}
 			if (e.getKeyChar() == KeyEvent.VK_SPACE) {
-				if (player.getWeapon().getAmmoInCurrentClip() > 0) {
+				if ((player.getWeapon().getAmmoInCurrentClip() > 0) || (player.getWeapon().getId() == 0)){
 					if (!player.getWeapon().isFiring()) {
 						player.getWeapon().fire();
 						soundPlayer.playGunshot(player.getWeapon().getId());
@@ -222,8 +222,8 @@ public class Game extends JFrame implements ActionListener {
 			this.getContentPane().remove(playerScreen);
 			this.getLevel().getMaze().setTileSize(64 / shrink);
 			player.setVelocity(player.getVelocity() / shrink);
-			player.setPlayerVector(new Vector2d(player.getPosX() / shrink,
-					player.getPosY() / shrink));
+			player.setPlayerVector(new Vector2d(player.getPlayerVector().x / shrink,
+					player.getPlayerVector().y / shrink));
 			this.getContentPane().add(mapScreen);
 			revalidate();
 			currentScreen = 2;
@@ -231,8 +231,8 @@ public class Game extends JFrame implements ActionListener {
 			this.getContentPane().remove(mapScreen);
 			this.getLevel().getMaze().setTileSize(64);
 			player.setVelocity(player.getVelocity() * shrink);
-			player.setPlayerVector(new Vector2d(player.getPosX() * shrink,
-					player.getPosY() * shrink));
+			player.setPlayerVector(new Vector2d(player.getPlayerVector().x * shrink,
+					player.getPlayerVector().y * shrink));
 			this.getContentPane().add(playerScreen);
 			revalidate();
 			currentScreen = 1;
@@ -243,16 +243,16 @@ public class Game extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (player.isMovingForward()) {
-			player.move(player.getVelocity(), level.getMaze());
+			player.move(level.getMaze(), true);
 		}
 		if (player.isMovingBack()) {
-			player.move(-1 * player.getVelocity(), level.getMaze());
+			player.move(level.getMaze(), false);
 		}
 		if (player.isTurningLeft()) {
-			player.turn(-2);
+			player.turn(true);
 		}
 		if (player.isTurningRight()) {
-			player.turn(2);
+			player.turn(false);
 		}
 		repaint();
 	}
