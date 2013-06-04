@@ -13,8 +13,9 @@ public class Weapon implements Runnable{
 	private boolean reloading;
 	private List<BufferedImage> images;
 	private int currentSprite;
-	private int sign = 1;
 	private Thread animateWeapon;
+	private int[] shotAnimation;
+	private int[] reloadAnimation;
 	
 	public Weapon(int id) {
 		this.id = id;	
@@ -26,6 +27,35 @@ public class Weapon implements Runnable{
 		ammoInCurrentClip = getFullClip(id);
 		animateWeapon = new Thread(this);
 		animateWeapon.start();
+		
+		shotAnimation = loadShotAnimation(id);
+		reloadAnimation = loadReloadAnimation(id);
+	}
+	
+	private int[] loadReloadAnimation(int id2) {
+		int animation[] = null;
+		if (id == 1) {
+			animation = new int[]{0,4,3,0};
+		}
+		else if (id == 2) {
+			animation = new int[]{0,3,4,5,4,3,0};
+		}
+
+		return animation;
+	}
+
+	private int[] loadShotAnimation(int id2) {
+		int animation[] = null;
+		if (id == 1) {
+			animation = new int[]{0,2,5,1,0};
+		}
+		else if (id == 2) {
+			animation = new int[]{0,1,2,1,0,3,4,5,4,3,0};
+		}
+		else {
+			animation = new int[]{0,1,2,1,0};
+		}
+		return animation;
 	}
 	
 	public int getMaxClips(int id)
@@ -64,31 +94,6 @@ public class Weapon implements Runnable{
 		}
 	}
 	
-	public void fireAnimation() {
-		
-		currentSprite = currentSprite + (1 * sign);
-		if ((currentSprite == (getNumberOfFrames(id) - 1)) && (sign == 1)) {
-			sign = -1;
-		}
-		if ((currentSprite == 0) && (sign == -1)) {
-			firing = false;
-			reloading = false;
-			sign = 1;
-		}
-	}
-	
-	public void reloadAnimation() {
-		
-		currentSprite = currentSprite + (1 * sign);
-		if ((currentSprite == (getNumberOfFrames(id) - 1)) && (sign == 1)) {
-			sign = -1;
-		}
-		if ((currentSprite == 0) && (sign == -1)) {
-			reloading = false;
-			sign = 1;
-		}
-	}
-	
 	private List<BufferedImage> loadImages(int id) {
 		String imageUrl = "lib\\textures\\weapons\\weapon_sprites_" + id + ".png";
 		BufferedImage img = ImageTool.loadImage(imageUrl);
@@ -97,16 +102,9 @@ public class Weapon implements Runnable{
 	
 	private int getNumberOfFrames(int id)
 	{
-//		if (id == 0){
-//			return 3;
-//		}
-		if (id == 1)
+		if ((id == 1) || (id == 2))
 		{
-			return 5;
-		}
-		else if (id == 2)
-		{
-			return 4;
+			return 6;
 		}
 		return 3;
 	}
@@ -233,18 +231,29 @@ public class Weapon implements Runnable{
 
 	@Override
 	public void run() {
+		int i = 0;
 		while(true){
 			if(firing) {
-				fireAnimation();
+				i = i + 1;
+				currentSprite = shotAnimation[i];
+				
+				if(i == (shotAnimation.length-1)) {
+					firing = false;
+					
+					i = 0;
+				}
 			}
 			if(reloading)
 			{
-				reloadAnimation();
+				i = i + 1;
+				currentSprite = reloadAnimation[i];
+				
+				if(i == (reloadAnimation.length-1)) {
+					reloading = false;
+					i = 0;
+				}
 			}
-			invokeSleep(100);
+			invokeSleep(80);
 		}
 	}
-		
-		
-	
 }

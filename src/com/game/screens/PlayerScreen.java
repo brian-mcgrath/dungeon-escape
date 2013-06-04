@@ -50,8 +50,8 @@ public class PlayerScreen extends JPanel
 	{
 		Graphics2D g2d = (Graphics2D) g;
 		g2d.setColor(Color.WHITE);
-		int clips = player.getWeapon().getNumberOfClips();
-		int bullets = player.getWeapon().getAmmoInCurrentClip();
+		int clips = player.getCurrentWeapon().getNumberOfClips();
+		int bullets = player.getCurrentWeapon().getAmmoInCurrentClip();
 		int health = player.getHealth();
 
 
@@ -99,7 +99,7 @@ public class PlayerScreen extends JPanel
 	
 	public void drawWeapon(Graphics g) {
 		Graphics2D g2d = (Graphics2D) g;
-		BufferedImage weaponImage = player.getWeapon().getCurrentImage();
+		BufferedImage weaponImage = player.getCurrentWeapon().getCurrentImage();
 		int width = weaponImage.getWidth() * 2;
 		int height = weaponImage.getHeight() * 2;
 		int xPos = (game.getWidth() / 2) - (width / 2);

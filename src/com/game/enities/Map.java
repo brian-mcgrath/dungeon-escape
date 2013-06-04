@@ -30,8 +30,8 @@ public class Map {
 	public Map(int mapNumber, int tileSize) {
 		this.mapArray = loadMap(mapNumber);
 		this.tileSize = tileSize;
-		lightWallImages = loadWallSlices(5, false);
-		darkWallImages = loadWallSlices(5, true);
+		lightWallImages = loadWallSlices(9, false);
+		darkWallImages = loadWallSlices(9, true);
 	}
 
 	
@@ -40,15 +40,14 @@ public class Map {
 	 * @param darken
 	 * @return
 	 */
-	private List<List<BufferedImage>> loadWallSlices(int numberOfWalls,
-			boolean darken) {
+	private List<List<BufferedImage>> loadWallSlices(int numberOfWalls, boolean darken) {
 		String wallImagePath = "lib\\textures\\walls\\wall_";
 		String wallImageName;
 		BufferedImage image;
 		List<BufferedImage> imageSlices;
-		List<List<BufferedImage>> images = new ArrayList<List<BufferedImage>>();
+		List<List<BufferedImage>> images = new ArrayList<List<BufferedImage>>(numberOfWalls);
 
-		for (int i = 0; i < 5; i++) {
+		for (int i = 0; i < numberOfWalls; i++) {
 			wallImageName = wallImagePath + (i + 1) + ".png";
 			image = ImageTool.loadImage(wallImageName);
 			if (darken) {

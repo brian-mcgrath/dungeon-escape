@@ -197,21 +197,30 @@ public class Game extends JFrame implements ActionListener {
 				System.exit(0);
 			}
 			if (e.getKeyChar() == KeyEvent.VK_SPACE) {
-				if ((player.getWeapon().getAmmoInCurrentClip() > 0) || (player.getWeapon().getId() == 0)){
-					if (!player.getWeapon().isFiring()) {
-						player.getWeapon().fire();
-						soundPlayer.playGunshot(player.getWeapon().getId());
+				if ((player.getCurrentWeapon().getAmmoInCurrentClip() > 0) || (player.getCurrentWeapon().getId() == 0)){
+					if (!player.getCurrentWeapon().isFiring()) {
+						player.getCurrentWeapon().fire();
+						soundPlayer.playGunshot(player.getCurrentWeapon().getId());
 					}
 				}
 				else {
-					if (!player.getWeapon().isReloading()) {
-						player.getWeapon().reload();
+					if (!player.getCurrentWeapon().isReloading()) {
+						player.getCurrentWeapon().reload();
 						soundPlayer.playReload();
 					}
 				}
 			}
 			if (e.getKeyChar() == KeyEvent.VK_M) {
 				changeScreen();
+			}
+			if (e.getKeyChar() == KeyEvent.VK_0) {
+				player.setCurrentWeapon(0);
+			}
+			if (e.getKeyChar() == KeyEvent.VK_1) {
+				player.setCurrentWeapon(1);
+			}
+			if (e.getKeyChar() == KeyEvent.VK_2) {
+				player.setCurrentWeapon(2);
 			}
 		}
 	}

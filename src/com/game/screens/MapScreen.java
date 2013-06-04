@@ -55,6 +55,14 @@ public class MapScreen extends JPanel {
 					g2d.setColor(Color.BLUE);
 					g2d.fillRect((i * tileSize), (j * tileSize), tileSize, tileSize);
 				}
+				if (maze.getMapArray()[j][i] == 6) {
+					g2d.setColor(Color.ORANGE);
+					g2d.fillRect((i * tileSize), (j * tileSize), tileSize, tileSize);
+				}
+				if ((maze.getMapArray()[j][i] == 7) || (maze.getMapArray()[j][i] == 8) || (maze.getMapArray()[j][i] == 9)){
+					g2d.setColor(Color.DARK_GRAY);
+					g2d.fillRect((i * tileSize), (j * tileSize), tileSize, tileSize);
+				}
 			}
 		}
 	}

@@ -1,5 +1,8 @@
 package com.game.characters;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.vecmath.Vector2d;
 
 import com.game.enities.Map;
@@ -18,7 +21,8 @@ public class Player {
 	private boolean turningRight = false;
 	private boolean movingForward = false;
 	private boolean movingBack = false;
-	private Weapon weapon;
+	private List<Weapon> weapons;
+	private int currentWeapon;
 	private double velocity;
 	private int health;
 	private Raycaster raycaster;
@@ -32,8 +36,12 @@ public class Player {
 	public Player(double posX, double posY, Angle angle) {
 		this.playerVector = new Vector2d(posX, posY);
 		this.angle = angle;
-		this.weapon = new Weapon(0);
-		this.velocity = 5;
+		this.weapons = new ArrayList<Weapon>(10);
+		this.currentWeapon = 0;
+		weapons.add(new Weapon(currentWeapon));
+		weapons.add(new Weapon(1));
+		weapons.add(new Weapon(2));
+		this.velocity = 16;
 		this.health = 99;
 		setRaycaster(new Raycaster(this));
 	}
@@ -43,7 +51,7 @@ public class Player {
 	 * @param rotationSpeed
 	 */
 	public void turn(boolean left) {
-		double rotationSpeed = velocity / 2;
+		double rotationSpeed = 4;
 		if(left)
 		{
 			rotationSpeed = rotationSpeed * -1;
@@ -112,8 +120,12 @@ public class Player {
 	/**
 	 * @return the weapon
 	 */
-	public Weapon getWeapon() {
-		return weapon;
+	public Weapon getCurrentWeapon() {
+		return weapons.get(currentWeapon);
+	}
+	
+	public void setCurrentWeapon(int id) {
+		currentWeapon = id;
 	}
 
 	
@@ -121,8 +133,8 @@ public class Player {
 	 * @param weapon
 	 *            the weapon to set
 	 */
-	public void setWeapon(Weapon weapon) {
-		this.weapon = weapon;
+	public void addWeapon(Weapon weapon) {
+		weapons.add(weapon);
 	}
 
 	
